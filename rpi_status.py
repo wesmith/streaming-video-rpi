@@ -1,0 +1,1 @@
+/home/pi/Devel/raspberry_pi/rpi-jupyter/python/rpi_status.py

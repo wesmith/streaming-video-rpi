@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+    
+<style>
+.button {
+  background-color: transparent;
+  color: rgb(250, 200, 250);
+  font-size: 2.0rem;
+  margin: 1px 5px;
+  border: none;
+}
+</style>
+
+<head>
+    
+<title>Raspberry Pi 4 Video Streaming</title>
+    
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    
+    <script>
+    function changed(value) {
+        var req2 = new XMLHttpRequest()
+        req2.onreadystatechange = function() {
+            if (req2.readyState == 4 && req2.status == 200) {
+                var response = JSON.parse(req2.responseText)
+                document.getElementById('button_result').innerHTML = response.output
+                }
+            }
+        req2.open('POST', '/button_input')
+        req2.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+        var postVars = 'button_value='+value
+        req2.send(postVars)
+        return false
+   }
+    </script>
+
+</head>
+
+<body>
+    
+<h1>Raspberry Pi 4 Video Streaming</h1>
+
+<img src="{{ url_for('video_feed') }}">
+<!-- WS the following line will put up a second identical frame -->
+<!-- img src="{{ url_for('video_feed') }}" -->
+
+<br><br>
+<input type='button' class='button'
+onClick='changed({{default[1]}})'
+value={{default[0]}}>
+<br><br>
+
+<table class="center">
+<br>
+{% for key, choices in invert.items() %}
+    <tr>
+    <td><input type='button' class='button' value={{key}}></td>
+    {% for toggle, value in choices.items() %}
+        <td><input type='button' class='button'
+        onClick='changed({{value}})' value={{toggle}}></td>
+    {% endfor %}
+    </tr>
+{% endfor %}
+</table>
+
+<table class="center" border=4>
+<br>
+{% for key, choices in flip.items() %}
+    <tr>
+    <td><input type='button' class='button' value={{key}}></td>
+    {% for toggle, value in choices.items() %}
+        <td><input type='button' class='button'
+        onClick='changed({{value}})' value={{toggle}}></td>
+    {% endfor %}
+    </tr>
+{% endfor %}
+</table>
+
+<table class="center" border=4>
+<br>
+{% for key, choices in gray.items() %}
+    <tr>
+    <td><input type='button' class='button' value={{key}}></td>
+    {% for toggle, value in choices.items() %}
+        <td><input type='button' class='button'
+        onClick='changed({{value}})' value={{toggle}}></td>
+    {% endfor %}
+    </tr>
+{% endfor %}
+</table>
+
+<table class="center" border=4>
+<br>
+{% for key, choices in blur.items() %}
+    <tr>
+    <td><input type='button' class='button' value={{key}}></td>
+    {% for toggle, value in choices.items() %}
+        <td><input type='button' class='button'
+        onClick='changed({{value}})' value={{toggle}}></td>
+    {% endfor %}
+    </tr>
+{% endfor %}
+</table>
+    
+<form action="" method="POST">
+    <label for="blur"><h2>Blurring: Enter size of blurring kernel (int):</h2></label>
+    <input type="text" name="blur" id="blur">
+    <input type="button" value="ENTER"
+           onclick="changed(document.getElementById('blur').value+999)">
+    <br><br>
+</form>
+
+<br>
+<h2>
+    <p>Button Result:</p>
+    <div id="button_result"></div>
+</h2>
+
+</body>
+</html>
