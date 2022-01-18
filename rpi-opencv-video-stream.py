@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
 
-# WESmith 01/07/22 this worked with the simulated camera out
-# of the box: impressive
-
 # WS TODO
 # - (done) run webcam via opencv
 # - add command-line inputs: camera type, url, port, frame size
-# - apply a stylesheet
-# - generalize camera to support image-processing algorithms
+# - fix the stylesheet
+# - add change-detection, other algos
 
 
 from importlib import import_module
