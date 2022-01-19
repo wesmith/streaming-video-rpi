@@ -6,12 +6,14 @@
 from picamera import PiCamera
 from picamera.array import PiRGBArray
 import cv2
-import time
-import datetime
+import time, datetime, argparse
 
-print(cv2.__version__)
+print('openCV version {}'.format(cv2.__version__))
 
-scale = 2
+scale          = 2
+picam          = True
+openCV_capture = True
+
 dispW = 320 * scale
 dispH = 240 * scale
 flip = 0
@@ -23,8 +25,6 @@ t_old = time.time()
 alpha = 0.95
 wid_hei = (dispW, dispH)
 
-picam          = True
-openCV_capture = True
 
 if openCV_capture:
 
