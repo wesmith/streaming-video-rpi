@@ -6,7 +6,7 @@
 from picamera import PiCamera
 from picamera.array import PiRGBArray
 import cv2
-import time, datetime, argparse
+import time, datetime, argparse, sys
 
 print('openCV version {}'.format(cv2.__version__))
 
@@ -147,5 +147,31 @@ def run(opencv=False, picam=True, scale=2, alpha=0.95):
 
 if __name__=='__main__':
 
-    run(opencv=True, picam=True, scale=1, alpha=0.95)
-# NOTE: include 'press q in video-display window to quit'
+    txt    = 'Run opencv_video_tests.py: press "q" in the '
+    txt   += 'video-display window to quit.'
+    help1  = 'Input "opencv" or "picamera" to select '
+    help1 += 'capture type.'
+    help2  = 'Input "picam" or "webcam" to select camera type.'
+    help3  = 'Input multiple of 320x240 (int 1,2,3, or 4, '
+    help3 += 'default: 2).'
+    help4  = 'Input weight for FPS calcs (float 0.0 to 1.0, '
+    help4 += 'default: 0.95).'
+    parser = argparse.ArgumentParser(description=txt)
+    parser.add_argument('capture', type=str,   help=help1)
+    parser.add_argument('camera',  type=str,   help=help2)
+    parser.add_argument('-scale',  type=int,   help=help3,
+                        default=2)
+    parser.add_argument('-alpha',  type=float, help=help4,
+                        default=0.95)
+    inputs = parser.parse_args(sys.argv[1:])
+    opencv = True if inputs.capture  == 'opencv' else False
+    picam  = True if inputs.camera   == 'picam'  else False
+    scale  = inputs.scale
+    alpha  = inputs.alpha
+
+    txt  = '\n\nSettings: '
+    txt += 'opencv {}, camera {}, scale {}, alpha {}\n\n'.\
+           format(opencv, picam, scale, alpha)
+    print(txt)
+
+    run(opencv=opencv, picam=picam, scale=scale, alpha=alpha)
