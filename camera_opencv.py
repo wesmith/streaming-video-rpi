@@ -23,7 +23,8 @@ def add_info(frame, fps, cam_uptime, scale, wid_hei, msg): # WS
     thick  = 2 if scale >= 1 else 1
 
     timestamp = datetime.datetime.now()
-    txt = timestamp.strftime("%d %B %Y %I:%M:%S %p")
+    # %f adds the microseconds, for latency testing
+    txt = timestamp.strftime("%d %B %Y %I:%M:%S %p %f")
     cv2.putText(frame, txt, (col0, row0), font, f_size,
                 (255, 120, 255), thick) # light magenta
     temp = ws.get_temp()

@@ -7,6 +7,7 @@ from picamera import PiCamera
 from picamera.array import PiRGBArray
 import cv2
 import time
+import datetime
 
 print(cv2.__version__)
 
@@ -67,12 +68,19 @@ def add_info(frame, fps):
     separation = int(5 * scale)
     row0   = 30
     col0   = 10
-    delta  = int(0 * scale)
+    delta  = int(1 * scale)
     #thick  = 2 if scale >= 1 else 1
     thick = 1
-    cv2.putText(frame, fps, (col0, row0 - 3 * delta),
+    cv2.putText(frame, fps, (col0, row0),
                 font, f_size,
                 (120, 255, 120), thick) # light green
+    timestamp = datetime.datetime.now()
+    # %f adds the microseconds, for latency testing
+    txt = timestamp.strftime("%d %B %Y %I:%M:%S %p %f")
+    cv2.putText(frame, txt, (col0, row0 + 15 * delta),
+                font, f_size,
+                (120, 255, 120), thick) # light green
+
 
 if openCV_capture:
 
