@@ -1,1 +1,1 @@
-/home/pi/Devel/raspberry_pi/rpi-jupyter/python/rpi_status.py
+/home/pi/Devel/raspberry_pi/rpi-jupyter/python_on_rpi/rpi_status.py
